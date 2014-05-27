@@ -257,8 +257,10 @@ abstract class AbstractDataLoader extends AbstractDataHandler implements DataLoa
 
                 $reflectionClass = new \ReflectionClass($parentClass);
                 if (!$reflectionClass->isAbstract()) {
-                    $parentObj = $obj->getParentOrCreate();
-                    $this->saveParentReference($parentClass, $key, $parentObj);
+                    if (method_exists($obj,'getParentOrCreate')) {
+                        $parentObj = $obj->getParentOrCreate();
+                        $this->saveParentReference($parentClass, $key, $parentObj);
+                    }
                 }
 
             }
